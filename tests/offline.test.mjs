@@ -14,6 +14,7 @@ const assets = [...sw.matchAll(/'\.\/([^']*)'/g)].map((m) => m[1]).filter(Boolea
 
 const walk = (dir) =>
   readdirSync(join(root, dir)).flatMap((f) => {
+    if (f.startsWith('.')) return []; // skip hidden files such as macOS .DS_Store
     const p = join(dir, f);
     return statSync(join(root, p)).isDirectory() ? walk(p) : [p];
   });
